@@ -1,0 +1,36 @@
+Formatted Number = 
+
+//Determine if the value is negative
+VAR sign = IF(SUM([Value]) < 0, "-", "")
+
+//Currency symbol
+VAR currencySymbol = "$" 
+
+//Get Int Amount by dividing the value by its' Base 1000 value
+VAR calc = INT(ROUND(ABS(SUM([Value]))/POWER(1000,INT(LOG(  ROUND(ABS(SUM([Value]))/10,0)*10 ,1000))),1))
+
+//Determine if you need to show a decimal
+//If the Modulo is zero, we just want to show blank (Ex 159.0K = 159K)
+//Else we want to show the decimal value (Ex 159.4K)
+VAR decimalPart = 
+IF(MOD((ROUND(ABS(SUM([Value]))/POWER(1000,INT(LOG(ABS(SUM([Value])),1000))),1)*10) , 10) = 0 
+    , ""
+    , CONCATENATE(".", MOD((ROUND(ABS(SUM([Value]))/POWER(1000,INT(LOG(ABS(SUM([Value])),1000))),1)*10) , 10))
+)
+
+//Determine the Unit to display based on the Log Base 1000
+VAR unitSymbol = 
+SWITCH(
+    INT(LOG(ROUND(ABS(SUM([Value]))/10,0)*10,1000))
+    ,1, "K"
+    ,2, "M"
+    ,3, "B"
+    ,4, "T"
+    ,""
+)
+
+VAR Result = sign & currencySymbol & calc & decimalPart & unitSymbol
+Return Result
+
+// Original script by Rody Zakovich • Adapted for Power BI by Julien Marmiesse
+
