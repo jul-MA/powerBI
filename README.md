@@ -1,5 +1,6 @@
 # powerBI
 
+* Sparklines in Power BI.pbix: how to use sparklines with Power BI
 * Hans Rosling - Explain the world with graphics: one of the most famous work of Hans Rosling recreated with Power BI
 * Formatting numbers with DAX - Formula.txt: DAX formula to format / shorten numbers dynamically 
 * Formatting numbers with DAX.pbix: demo file explaining how to format numbers dynamically using DAX
